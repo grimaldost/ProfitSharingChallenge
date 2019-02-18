@@ -21,9 +21,8 @@ namespace ProfitSharingChallenge
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddDbContext<EmployeeContext>(opt => opt.UseInMemoryDatabase("EmployeeList"));
+            services.Add(new ServiceDescriptor(typeof(IEmployeesData), new EmployeesData("https://profitsharingchallenge.firebaseio.com/")));
             services.AddScoped<IProfitSharing, ProfitSharing>();
-            services.AddSingleton<IReturnData, ReturnData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

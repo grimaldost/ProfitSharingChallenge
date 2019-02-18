@@ -2,6 +2,7 @@
 using ProfitSharingChallenge.Models;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace ProfitSharingChallenge.Controllers
 {
@@ -9,50 +10,33 @@ namespace ProfitSharingChallenge.Controllers
     [ApiController]
     public class EmployeeController : Controller
     {
-        private readonly EmployeeContext _context;
+        private readonly IEmployeesData _data;
         private readonly IProfitSharing _profitSharing;
 
-        public EmployeeController(EmployeeContext context, IProfitSharing
+        public EmployeeController(IEmployeesData data, IProfitSharing
             profitSharing)
         {
-            _context = context;
+            _data = data;
             _profitSharing = profitSharing;
         }
 
         //GET api/employee
         [HttpGet]
-        public ActionResult<DbSet<EmployeeItem>> Get()
+        public async Task<ActionResult<EmployeeItem[]>> Get()
         {
-            return _context.employees;
+            return await _data.GetEmployeesAsync();
         }
 
         //GET api/employee/{matricula}
         [HttpGet("{matricula}")]
-        public ActionResult<EmployeeItem> Get(string matricula)
+        public async Task<ActionResult<EmployeeItem>> Get(string matricula)
         {
-            var employee = _context.employees.Find(matricula);
+            var employee = _data.GetEmployeeAsync(matricula);
             if (employee == null)
                 return NotFound();
-
-            return employee;
+        
+            return await employee;
         }
 
-
-        //POST api/employee
-        [HttpPost]
-        public ActionResult<EmployeeItem[]> Post([FromBody] EmployeeItem[] employeeList)
-        {
-            foreach (EmployeeItem employee in employeeList)
-            {
-                if (_context.employees.Find(employee.matricula) == null)
-                {
-                    _context.employees.Add(employee);
-                    _context.SaveChanges();
-                    _profitSharing.UpdateParticipation(employee.matricula);
-                }
-            }
-
-            return employeeList;
-        }
     }
 }

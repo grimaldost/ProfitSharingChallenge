@@ -1673,19 +1673,6 @@
         "build": {
           "build/netcoreapp1.0/xunit.runner.visualstudio.props": {}
         }
-      },
-      "ProfitSharingChallenge/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v2.1",
-        "dependencies": {
-          "Microsoft.NETCore.App": "2.1.0"
-        },
-        "compile": {
-          "bin/placeholder/ProfitSharingChallenge.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/ProfitSharingChallenge.dll": {}
-        }
       }
     }
   },
@@ -5856,18 +5843,13 @@
         "xunit.runner.visualstudio.2.4.0.nupkg.sha512",
         "xunit.runner.visualstudio.nuspec"
       ]
-    },
-    "ProfitSharingChallenge/1.0.0": {
-      "type": "project",
-      "path": "../ProfitSharingChallenge/ProfitSharingChallenge.csproj",
-      "msbuildProject": "../ProfitSharingChallenge/ProfitSharingChallenge.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
+      "C:\\Users\\grima\\Reps\\ProfitSharingChallenge\\ProfitSharingChallenge\\ProfitSharingChallenge.csproj",
       "Microsoft.NET.Test.Sdk >= 15.9.0",
       "Microsoft.NETCore.App >= 2.1.0",
-      "ProfitSharingChallenge >= 1.0.0",
       "xunit >= 2.4.0",
       "xunit.runner.visualstudio >= 2.4.0"
     ]
@@ -5942,5 +5924,16 @@
         "warn": true
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1105",
+      "level": "Error",
+      "message": "Unable to find project information for 'C:\\Users\\grima\\Reps\\ProfitSharingChallenge\\ProfitSharingChallenge\\ProfitSharingChallenge.csproj'. Inside Visual Studio, this may be because the project is unloaded or not part of current solution. Otherwise the project file may be invalid or missing targets required for restore.",
+      "libraryId": "C:\\Users\\grima\\Reps\\ProfitSharingChallenge\\ProfitSharingChallenge\\ProfitSharingChallenge.csproj",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.1"
+      ]
+    }
+  ]
 }

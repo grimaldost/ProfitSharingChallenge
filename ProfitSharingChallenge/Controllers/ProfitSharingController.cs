@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProfitSharingChallenge.Models;
-using System;
+using System.Threading.Tasks;
 
 namespace ProfitSharingChallenge.Controllers
 {
@@ -8,46 +8,18 @@ namespace ProfitSharingChallenge.Controllers
     [ApiController]
     public class ProfitSharingController : Controller
     {
-        private readonly EmployeeContext _context;
         private readonly IProfitSharing _profitSharing;
-        private readonly IReturnData _returnData;
 
-        public ProfitSharingController(EmployeeContext context, IProfitSharing
-            profitSharing, IReturnData returnData)
+        public ProfitSharingController(IProfitSharing profitSharing)
         {
-            _context = context;
             _profitSharing = profitSharing;
-            _returnData = returnData;
         }
 
-        //GET api/profitsharing
-        [HttpGet]
-        public ActionResult<ReturnItem> Get()
+        //GET api/profitsharing/total_disponibilizado
+        [HttpGet("{total_disponibilizado}")]
+        public async Task<ActionResult<ReturnItem>> Get(string total_disponibilizado)
         {
-            // TODO: Return all profit sharings and resume
-
-            return _profitSharing.GetParticipation();
+            return await _profitSharing.GetParticipation(total_disponibilizado);
         }
-
-        //GET api/profitsharing/{matricula}
-        [HttpGet("{matricula}")]
-        public ActionResult<ReturnItem> Get(string matricula)
-        {
-            var employee = _context.participation.Find(matricula);
-            if (employee == null)
-                return NotFound();
-
-            return _profitSharing.GetParticipation(matricula);
-        }
-
-        //Post api/profitsharing/{total_disponibilizado}
-        [HttpPost("{total_disponibilizado}")]
-        public ActionResult<string> Post(string total_disponibilizado)
-        {
-            _returnData.SetTDisp(Convert.ToDouble(total_disponibilizado));
-            _context.SaveChanges();
-            return "Total disponibilizado atualizado!";
-        }
-
     }
 }

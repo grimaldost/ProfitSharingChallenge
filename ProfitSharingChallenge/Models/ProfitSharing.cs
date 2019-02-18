@@ -1,48 +1,41 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ProfitSharingChallenge.Models
 {
     public interface IProfitSharing
     {
-        void UpdateParticipation(string matricula);
-        ReturnItem GetParticipation();
-        ReturnItem GetParticipation(string matricula);
+        Task<ReturnItem> GetParticipation(string total_disponibilizado);
     }
 
     public class ProfitSharing : IProfitSharing
     {
-        private readonly EmployeeContext _context;
-        private readonly IReturnData _returnData;
+        private readonly IEmployeesData _data;
 
-        public ProfitSharing(EmployeeContext context, IReturnData returnData)
+        public ProfitSharing(IEmployeesData data)
         {
-            _context = context;
-            _returnData = returnData;
+            _data = data;
         }
 
         /* 
-         * Update profit sharing participation for new employee
+         * Update profit sharing participation for database employees
          * 
          * Bonus Formula:
          *       (SB*PTA) + (SB*PAA)
          *       ___________________ * 12
          *             (SB*PFS)
-         * 
-         *  Participation only depends on each employee data, so it's
-         *  necessary update just when a new employee is inserted.
+         *
          */
-        public void UpdateParticipation(string matricula)
+        public ParticipationItem CalculateParticipation(EmployeeItem employee)
         {
-            EmployeeItem employee = _context.employees.Find(matricula);
-
             if (employee == null)
-                return;
+                return null;
 
             // Parameters
-            bool estagiario = employee.cargo == "Estagiário";
-            var sb = SB(employee.salario_bruto);
+            bool estagiario = employee.cargo == "Estagiario";
+            var sb = BrlStringToDouble(employee.salario_bruto);
             var pta = PTA(employee.data_de_admissao);
             var paa = PAA(employee.area);
             var pfs = PFS(employee.salario_bruto, estagiario);
@@ -53,52 +46,33 @@ namespace ProfitSharingChallenge.Models
             newParticipation.nome = employee.nome;
             newParticipation.matricula = employee.matricula;
             newParticipation.valor_da_participacao = String.Format("R$ {0:0.0,0}", participation_value);
-            _context.participation.Add(newParticipation);
-            _context.SaveChanges();
-
-            // Update general parameters
-            _returnData.SetTFunc(_returnData.GetTFunc() + 1);
-            _returnData.SetTDist(_returnData.GetTDist() + participation_value);
+            return newParticipation;
         }
 
         /*
          * Return Participation for all employees
          */
-        public ReturnItem GetParticipation()
+        public async Task<ReturnItem> GetParticipation(string total_disponibilizado)
         {
             ReturnItem r = new ReturnItem();
             List<ParticipationItem> pl = new List<ParticipationItem>();
+            EmployeeItem[] employees = await _data.GetEmployeesAsync();
+            int total_de_funcionarios = 0;
+            double total_distribuido = 0.0;
 
-            foreach(ParticipationItem p in _context.participation)
+            foreach (EmployeeItem e in employees)
             {
-                pl.Add(p);
+                ParticipationItem newParticipation = CalculateParticipation(e);
+                pl.Add(newParticipation);
+                total_de_funcionarios += 1;
+                total_distribuido += BrlStringToDouble(newParticipation.valor_da_participacao);
             }
 
             r.participacoes = pl;
-            r.total_de_funcionarios = _returnData.GetTFunc().ToString();
-            r.total_distribuido = String.Format("R$ {0:0.0,0}", _returnData.GetTDist());
-            r.total_disponibilizado = String.Format("R$ {0:0.0,0}", _returnData.GetTDisp());
-            r.saldo_total_distponibilizado = String.Format("R$ {0:0.0,0}", _returnData.GetTDisp() - _returnData.GetTDist());
-
-            return r;
-        }
-
-        /*
-         * Return participation for a specific employee defined by its ID
-         */
-        public ReturnItem GetParticipation(string matricula)
-        {
-            ReturnItem r = new ReturnItem();
-            List<ParticipationItem> pl = new List<ParticipationItem>();
-            ParticipationItem p = _context.participation.Find(matricula);
-            if (p != null)
-                pl.Add(p);
-
-            r.participacoes = pl;
-            r.total_de_funcionarios = _returnData.GetTFunc().ToString();
-            r.total_distribuido = String.Format("R$ {0:0.0,0}", _returnData.GetTDist());
-            r.total_disponibilizado = String.Format("R$ {0:0.0,0}", _returnData.GetTDisp());
-            r.saldo_total_distponibilizado = String.Format("R$ {0:0.0,0}", _returnData.GetTDisp() - _returnData.GetTDist());
+            r.total_de_funcionarios = total_de_funcionarios.ToString();
+            r.total_distribuido = String.Format("R$ {0:0.0,0}", total_distribuido);
+            r.total_disponibilizado = String.Format("R$ {0:0.0,0}", BrlStringToDouble(total_disponibilizado));
+            r.saldo_total_distponibilizado = String.Format("R$ {0:0.0,0}", BrlStringToDouble(total_disponibilizado) - total_distribuido);
 
             return r;
         }
@@ -108,7 +82,7 @@ namespace ProfitSharingChallenge.Models
         /*
          * Calculate gross salary
          */
-        private double SB(string salario_bruto)
+        private double BrlStringToDouble(string salario_bruto)
         {
             var a = Regex.Replace(salario_bruto, "[R$ .]", string.Empty);
 
@@ -139,7 +113,7 @@ namespace ProfitSharingChallenge.Models
         private int PFS(string salario_bruto, bool estagiario)
         {
             var minWage = 998.0; // Hard coded
-            var salaryRange = SB(salario_bruto) / minWage;
+            var salaryRange = BrlStringToDouble(salario_bruto) / minWage;
 
             if (estagiario || salaryRange <= 3) return 1;
             if (salaryRange <= 5) return 2;
@@ -160,7 +134,7 @@ namespace ProfitSharingChallenge.Models
                 case "Financeiro":
                 case "Tecnologia":
                     return 2;
-                case "Serviços Gerais":
+                case "Servicos Gerais":
                     return 3;
                 case "Relacionamento com o Cliente":
                     return 5;
