@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using ProfitSharingChallenge.Models;
+using System.IO;
 
 namespace ProfitSharingChallenge
 {
@@ -23,6 +24,16 @@ namespace ProfitSharingChallenge
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.Add(new ServiceDescriptor(typeof(IEmployeesData), new EmployeesData("https://profitsharingchallenge.firebaseio.com/")));
             services.AddScoped<IProfitSharing, ProfitSharing>();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info
+                {
+                    Title = "Documentation",
+                    Version = "v1"
+                });
+                var xmlFile = Path.ChangeExtension(typeof(Startup).Assembly.Location, ".xml");
+                c.IncludeXmlComments(xmlFile);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +50,11 @@ namespace ProfitSharingChallenge
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Documentation");
+            });
         }
     }
 }

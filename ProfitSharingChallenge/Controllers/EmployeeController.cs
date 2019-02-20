@@ -17,14 +17,25 @@ namespace ProfitSharingChallenge.Controllers
             _data = data;
         }
 
-        //GET api/employee
+        /// <summary>
+        /// Get all employees in database
+        /// </summary>
+        /// <returns>
+        /// Json with all empployee items in database
+        /// </returns>
         [HttpGet]
         public async Task<ActionResult<EmployeeItem[]>> Get()
         {
             return await _data.GetEmployeesAsync();
         }
 
-        //GET api/employee/{matricula}
+        /// <summary>
+        /// Get single employee by its id
+        /// </summary>
+        /// <param name="matricula">Id of the employee</param>
+        /// <returns>
+        /// Json with single employee item difined by matricula
+        /// </returns>
         [HttpGet("{matricula}")]
         public async Task<ActionResult<EmployeeItem>> Get(string matricula)
         {

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ProfitSharingChallenge</name>
+    </assembly>
+    <members>
+        <member name="M:ProfitSharingChallenge.Controllers.EmployeeController.Get">
+            <summary>
+            Get all employees in database
+            </summary>
+            <returns>
+            Json with all empployee items in database
+            </returns>
+        </member>
+        <member name="M:ProfitSharingChallenge.Controllers.EmployeeController.Get(System.String)">
+            <summary>
+            Get single employee by its id
+            </summary>
+            <param name="matricula">Id of the employee</param>
+            <returns>
+            Json with single employee item difined by matricula
+            </returns>
+        </member>
+        <member name="M:ProfitSharingChallenge.Controllers.ProfitSharingController.Get(System.String)">
+            <summary>
+            Get all employees participation in profit sharing, and a resume of
+            all values
+            </summary>
+            <param name="total_disponibilizado">Total amount of available money for share</param>
+            <returns>
+            json with all employees participation, number of employees, total shared,
+            total available and final balance
+            </returns>
+        </member>
+    </members>
+</doc>

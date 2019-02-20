@@ -15,7 +15,15 @@ namespace ProfitSharingChallenge.Controllers
             _profitSharing = profitSharing;
         }
 
-        //GET api/profitsharing/total_disponibilizado
+        /// <summary>
+        /// Get all employees participation in profit sharing, and a resume of
+        /// all values
+        /// </summary>
+        /// <param name="total_disponibilizado">Total amount of available money for share</param>
+        /// <returns>
+        /// json with all employees participation, number of employees, total shared,
+        /// total available and final balance
+        /// </returns>
         [HttpGet("{total_disponibilizado}")]
         public async Task<ActionResult<ReturnItem>> Get(string total_disponibilizado)
         {

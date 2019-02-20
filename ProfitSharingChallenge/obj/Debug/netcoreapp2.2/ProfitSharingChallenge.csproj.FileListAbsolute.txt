@@ -12,3 +12,4 @@ C:\Users\grima\Reps\ProfitSharingChallenge\ProfitSharingChallenge\obj\Debug\netc
 C:\Users\grima\Reps\ProfitSharingChallenge\ProfitSharingChallenge\obj\Debug\netcoreapp2.2\ProfitSharingChallenge.RazorTargetAssemblyInfo.cache
 C:\Users\grima\Reps\ProfitSharingChallenge\ProfitSharingChallenge\obj\Debug\netcoreapp2.2\ProfitSharingChallenge.dll
 C:\Users\grima\Reps\ProfitSharingChallenge\ProfitSharingChallenge\obj\Debug\netcoreapp2.2\ProfitSharingChallenge.pdb
+C:\Users\grima\Reps\ProfitSharingChallenge\ProfitSharingChallenge\bin\Debug\netcoreapp2.2\ProfitSharingChallenge.xml
