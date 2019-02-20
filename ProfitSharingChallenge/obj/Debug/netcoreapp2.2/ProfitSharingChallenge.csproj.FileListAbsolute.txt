@@ -1,0 +1,14 @@
+C:\Users\grima\Reps\ProfitSharingChallenge\ProfitSharingChallenge\bin\Debug\netcoreapp2.2\ProfitSharingChallenge.deps.json
+C:\Users\grima\Reps\ProfitSharingChallenge\ProfitSharingChallenge\bin\Debug\netcoreapp2.2\ProfitSharingChallenge.runtimeconfig.json
+C:\Users\grima\Reps\ProfitSharingChallenge\ProfitSharingChallenge\bin\Debug\netcoreapp2.2\ProfitSharingChallenge.runtimeconfig.dev.json
+C:\Users\grima\Reps\ProfitSharingChallenge\ProfitSharingChallenge\bin\Debug\netcoreapp2.2\ProfitSharingChallenge.dll
+C:\Users\grima\Reps\ProfitSharingChallenge\ProfitSharingChallenge\bin\Debug\netcoreapp2.2\ProfitSharingChallenge.pdb
+C:\Users\grima\Reps\ProfitSharingChallenge\ProfitSharingChallenge\obj\Debug\netcoreapp2.2\ProfitSharingChallenge.csprojAssemblyReference.cache
+C:\Users\grima\Reps\ProfitSharingChallenge\ProfitSharingChallenge\obj\Debug\netcoreapp2.2\ProfitSharingChallenge.csproj.CoreCompileInputs.cache
+C:\Users\grima\Reps\ProfitSharingChallenge\ProfitSharingChallenge\obj\Debug\netcoreapp2.2\ProfitSharingChallenge.RazorAssemblyInfo.cache
+C:\Users\grima\Reps\ProfitSharingChallenge\ProfitSharingChallenge\obj\Debug\netcoreapp2.2\ProfitSharingChallenge.RazorAssemblyInfo.cs
+C:\Users\grima\Reps\ProfitSharingChallenge\ProfitSharingChallenge\obj\Debug\netcoreapp2.2\ProfitSharingChallenge.AssemblyInfoInputs.cache
+C:\Users\grima\Reps\ProfitSharingChallenge\ProfitSharingChallenge\obj\Debug\netcoreapp2.2\ProfitSharingChallenge.AssemblyInfo.cs
+C:\Users\grima\Reps\ProfitSharingChallenge\ProfitSharingChallenge\obj\Debug\netcoreapp2.2\ProfitSharingChallenge.RazorTargetAssemblyInfo.cache
+C:\Users\grima\Reps\ProfitSharingChallenge\ProfitSharingChallenge\obj\Debug\netcoreapp2.2\ProfitSharingChallenge.dll
+C:\Users\grima\Reps\ProfitSharingChallenge\ProfitSharingChallenge\obj\Debug\netcoreapp2.2\ProfitSharingChallenge.pdb

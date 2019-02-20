@@ -11,13 +11,10 @@ namespace ProfitSharingChallenge.Controllers
     public class EmployeeController : Controller
     {
         private readonly IEmployeesData _data;
-        private readonly IProfitSharing _profitSharing;
 
-        public EmployeeController(IEmployeesData data, IProfitSharing
-            profitSharing)
+        public EmployeeController(IEmployeesData data)
         {
             _data = data;
-            _profitSharing = profitSharing;
         }
 
         //GET api/employee

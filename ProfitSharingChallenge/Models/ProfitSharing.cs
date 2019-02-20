@@ -80,7 +80,7 @@ namespace ProfitSharingChallenge.Models
         // Helper Methods
 
         /*
-         * Calculate gross salary
+         * Convert string to double
          */
         private double BrlStringToDouble(string salario_bruto)
         {
